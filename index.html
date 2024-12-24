@@ -5,26 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copiar Código PIX</title>
     <style>
-        /* Estilo global para evitar rolagem lateral */
+        /* Estilo global */
         body {
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            overflow: hidden; /* Remove rolagem */
             font-family: Arial, sans-serif;
         }
 
-        /* Estilo para o conteúdo */
-        #texto {
-            font-size: 1.2rem;
-            margin: 20px;
-            word-wrap: break-word;
-        }
-
-        /* Estilo para o botão */
+        /* Estilo do botão */
         button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
+            padding: 15px 30px;
             font-size: 1rem;
             background-color: #007BFF;
             color: #fff;
@@ -40,23 +36,25 @@
     </style>
 </head>
 <body>
-    <p id="texto">Carregando código PIX...</p>
     <button id="copiar">Copiar Código PIX</button>
 
     <script>
         // Função para obter o valor do parâmetro "qrcode" da URL
         function obterParametroQrcode() {
             const params = new URLSearchParams(window.location.search);
-            return params.get("qrcode") || "Código PIX não encontrado.";
+            return params.get("qrcode") || "";
         }
 
-        // Define o texto a partir do parâmetro "qrcode"
+        // Código PIX obtido da URL
         const codigoPIX = obterParametroQrcode();
-        const textoElemento = document.getElementById("texto");
-        textoElemento.textContent = codigoPIX;
 
         // Função para copiar o código PIX
         document.getElementById("copiar").addEventListener("click", function() {
+            if (!codigoPIX) {
+                alert("Código PIX não encontrado.");
+                return;
+            }
+
             const inputTemporario = document.createElement("textarea");
             inputTemporario.value = codigoPIX;
             document.body.appendChild(inputTemporario);
