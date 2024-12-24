@@ -32,10 +32,33 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Estilo do alerta */
+        #alerta {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #alerta.mostrar {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
     <button id="copiar">Copiar Código PIX</button>
+    <div id="alerta">PIX copiado!</div>
 
     <script>
         // Função para obter o valor do parâmetro "qrcode" da URL
@@ -62,7 +85,7 @@
             try {
                 const sucesso = document.execCommand("copy");
                 if (sucesso) {
-                    alert("Código PIX copiado com sucesso!");
+                    mostrarAlerta(); // Exibe o alerta estilizado
                 } else {
                     alert("Falha ao copiar o código PIX.");
                 }
@@ -72,6 +95,17 @@
 
             document.body.removeChild(inputTemporario);
         });
+
+        // Função para exibir o alerta estilizado
+        function mostrarAlerta() {
+            const alerta = document.getElementById("alerta");
+            alerta.classList.add("mostrar");
+
+            // Remove o alerta após 3 segundos
+            setTimeout(() => {
+                alerta.classList.remove("mostrar");
+            }, 3000);
+        }
     </script>
 </body>
 </html>
