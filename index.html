@@ -11,15 +11,28 @@
 
     <script>
         document.getElementById("copiar").addEventListener("click", function() {
-            // Seleciona o texto
             const texto = document.getElementById("texto").textContent;
 
-            // Usa a API Clipboard para copiar
-            navigator.clipboard.writeText(texto).then(() => {
-                alert("Texto copiado com sucesso!");
-            }).catch(err => {
+            // Cria um elemento de input temporário para copiar o texto
+            const inputTemporario = document.createElement("textarea");
+            inputTemporario.value = texto;
+            document.body.appendChild(inputTemporario);
+            inputTemporario.select();
+
+            try {
+                // Executa o comando de cópia
+                const sucesso = document.execCommand("copy");
+                if (sucesso) {
+                    alert("Texto copiado com sucesso!");
+                } else {
+                    alert("Falha ao copiar o texto.");
+                }
+            } catch (err) {
                 console.error("Erro ao copiar texto: ", err);
-            });
+            }
+
+            // Remove o input temporário
+            document.body.removeChild(inputTemporario);
         });
     </script>
 </body>
